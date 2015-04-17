@@ -25,7 +25,7 @@ def h(mol, canv, scale=50):
     for atom in mol.atom_block:
         sum_x += atom[0]
         num_x += 1
-        sum_y = atom[1]
+        sum_y += atom[1]
         num_y += 1
     x_0 = sum_x / num_x
     y_0 = sum_y / num_y
@@ -45,7 +45,7 @@ def h(mol, canv, scale=50):
             sum_y = atom[1]
             num_y += 1'''
         x_y_r=for_circle(*x_y, radius=7)
-        canv.create_oval(*x_y_r, fill="white", outline="white")
+        canv.create_oval(*x_y_r, fill="lightyellow", outline="lightyellow")
         canv.create_text(*x_y,text=atom[3],font="Verdana 12",fill="red")
 
         
