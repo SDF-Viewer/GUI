@@ -13,7 +13,7 @@ def create_canvas():
     file = open('sdf_list.sdf', 'tr')
     lm = extract_molecules_list_from_sdf(file, 'Source')
     file.close()
-    mol=lm.mol_list[30]
+    mol=lm.mol_list[29]
     draw_mol(mol, canv)   
     root.mainloop()
 create_canvas()

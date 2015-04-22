@@ -58,9 +58,12 @@ def double_line(bond, ro=1):
         almost_x_y = [dist, 0]
     else:
         k = (bond[3] - bond[1]) / k_znam
-        sign_k = k / abs(k)
-        k *= k
-        almost_x_y = [dist/math.sqrt(1/k + 1), -dist/math.sqrt(k + 1)*sign_k]
+        if k == 0:
+            almost_x_y = [0, dist]
+        else:
+            sign_k = k / abs(k)
+            k *= k
+            almost_x_y = [dist/math.sqrt(1/k + 1), -dist/math.sqrt(k + 1)*sign_k]
     for bond_i in [0, 1]:
         for coord_i in [0, 1, 2, 3]:
             double_bond[bond_i][coord_i] = (2*bond_i - 1) * almost_x_y[coord_i%2] + bond[coord_i]
@@ -126,7 +129,7 @@ def draw_mol(mol, canv, scale=50):
         for near_atom in dict_of_aroma_bonds[atom]:
             bond = [atom, near_atom, dict_of_aroma_bonds[atom][near_atom]]
             draw_bond(*bond)
-    print("dict_of_aroma_bonds:\n", dict_of_aroma_bonds)
+    #print("dict_of_aroma_bonds:\n", dict_of_aroma_bonds)
     '''if dict_of_aroma_bonds != []:
         for atom in dict_of_aroma_bonds:
             dfs_aroma(atom)
