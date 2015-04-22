@@ -1,7 +1,8 @@
 #from dfs import* 
-mol_gl, canv_gl, dict_of_aroma_bonds, type_bond_gl = (0, 0, {}, 0)
-three_valencies = set()
-spTree = {}
+mol_gl, canv_gl,  = (0, 0)
+from aroma import*
+#three_valencies = set()
+
 
 def for_circle(x, y, radius):
     return [x-radius, y-radius, x+radius, y+radius]
@@ -22,21 +23,7 @@ def into_center(scale):
             atom[i] *= scale
             atom[i] += 250
             
-def into_aroma_dict(start, finish, weight):
-    global dict_of_aroma_bonds
-    start, finish, weight = int(start), int(finish), weight
-    
-    if start not in dict_of_aroma_bonds:
-        dict_of_aroma_bonds[start] = {finish:weight}
-    else:
-        dict_of_aroma_bonds[start][finish] = weight
-    if finish not in dict_of_aroma_bonds:
-        dict_of_aroma_bonds[finish] = {start:weight}
-    else:
-        dict_of_aroma_bonds[finish][start] = weight
-    #return dict_of_aroma_bonds
-
-def callFriends(vertex):
+'''def callFriends(vertex):
     three_valencies.add(vertex)
     for friend in dict_of_aroma_bonds[vertex]:
         if friend not in three_valencies:
@@ -52,7 +39,7 @@ def callFriends(vertex):
             else:
                 spTree[finish][start] = weight
             callFriends(friend)
-
+'''
 def dfs_aroma(atom):
     
     pass
@@ -97,11 +84,11 @@ def draw_bond(num_atom1, num_atom2, type_bond):
         canv_gl.create_line(*bond[:4],width=2,tag=str(type_bond))
     else:
         canv_gl.create_line(*bond[:4],width=2,tag=str(type_bond), fill="red")
-def printAsListOfArcs(tree):
+'''def printAsListOfArcs(tree):
     for start in tree:
         for finish in tree[start]:
-            print(start, finish, tree[start][finish])
-def jk():
+            print(start, finish, tree[start][finish])'''
+'''def jk():
     dict_of_aroma_bonds = into_aroma_dict()
     three_valencies = set()
     spTree = {}
@@ -118,7 +105,7 @@ def jk():
         
 
     print("Number of components:",numOfComp)
-
+'''
 def draw_mol(mol, canv, scale=50):
     #sum_x, sum_y, num_x, num_y = (0, 0, 0, 0)
     global mol_gl, canv_gl, dict_of_aroma_bonds
@@ -129,16 +116,22 @@ def draw_mol(mol, canv, scale=50):
     for num_bond in range(len(mol_gl.bond_block)):
         bond = mol_gl.bond_block[num_bond][:3]
         if bond[2] == 4:
-            bond[2] = [num_bond]
+            #bond[2] = [num_bond]
+            bond[2] = 7
             into_aroma_dict(*bond)
         else:
             draw_bond(*bond)
-    print(dict_of_aroma_bonds)
-    if dict_of_aroma_bonds != []:
+    create_sp_trees()
+    for atom in dict_of_aroma_bonds:
+        for near_atom in dict_of_aroma_bonds[atom]:
+            bond = [atom, near_atom, dict_of_aroma_bonds[atom][near_atom]]
+            draw_bond(*bond)
+    print("dict_of_aroma_bonds:\n", dict_of_aroma_bonds)
+    '''if dict_of_aroma_bonds != []:
         for atom in dict_of_aroma_bonds:
             dfs_aroma(atom)
             draw_aroma_bonds()
-        
+    '''   
     for atom in mol_gl.atom_block:
         x_y = atom[:2]
         x_y_r = for_circle(*x_y, radius=7)
