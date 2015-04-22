@@ -27,12 +27,13 @@ def create_sp_trees():
             #print("spTree:\n", spTree)
             last_atom = dfs_aroma(atom, num_of_spanning_trees)
             type_bond_l = 2 - type_bond_gl % 2
-            if type_bond_l == 2:
+            '''if type_bond_l == 2:
                 print("Not aromatic")
                 #FIX_ME : it's neсessary to exit with error!!!
             elif type_bond_l == 1:
                 dict_of_aroma_bonds[atom][last_atom] = type_bond_l
                 dict_of_aroma_bonds[last_atom][atom] = type_bond_l
+            '''
             '''print("last_atom:\n", last_atom)
             print("dict_of_aroma_bonds: \n", dict_of_aroma_bonds)
             print("spTree:", spTree, "num_of_spanning_trees:", \

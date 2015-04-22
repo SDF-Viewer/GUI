@@ -1,13 +1,10 @@
-#from dfs import* 
 mol_gl, canv_gl,  = (0, 0)
 from aroma import*
-#three_valencies = set()
-
 
 def for_circle(x, y, radius):
     return [x-radius, y-radius, x+radius, y+radius]
 
-def into_center(scale):
+def into_center(scale, center):
     global mol_gl
     summa, num, x_y_0 = ([0, 0], [0, 0], [0, 0])
     for atom in mol_gl.atom_block:
@@ -21,7 +18,7 @@ def into_center(scale):
         for i in 0, 1:
             atom[i] -= x_y_0[i]
             atom[i] *= scale
-            atom[i] += 250
+            atom[i] += center
             
 '''def callFriends(vertex):
     three_valencies.add(vertex)
@@ -40,14 +37,14 @@ def into_center(scale):
                 spTree[finish][start] = weight
             callFriends(friend)
 '''
-def dfs_aroma(atom):
+'''def dfs_aroma(atom):
     
     pass
 
 def draw_aroma_bonds():
     #print("draw_aroma_bonds works")
     pass
-
+'''
 def double_line(bond, ro=1):
     import math
     dist = 2
@@ -109,18 +106,16 @@ def draw_bond(num_atom1, num_atom2, type_bond):
 
     print("Number of components:",numOfComp)
 '''
-def draw_mol(mol, canv, scale=50):
-    #sum_x, sum_y, num_x, num_y = (0, 0, 0, 0)
+def draw_mol(mol, canv, scale=70, center=250):
     global mol_gl, canv_gl, dict_of_aroma_bonds
     import copy
     mol_gl = copy.deepcopy(mol)
     canv_gl = canv
-    into_center(scale)
+    into_center(scale, center)
     for num_bond in range(len(mol_gl.bond_block)):
         bond = mol_gl.bond_block[num_bond][:3]
         if bond[2] == 4:
-            #bond[2] = [num_bond]
-            bond[2] = 7
+            bond[2] = 1
             into_aroma_dict(*bond)
         else:
             draw_bond(*bond)
