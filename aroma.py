@@ -15,17 +15,17 @@ def into_aroma_dict(start, finish, weight):
     #return dict_of_aroma_bonds
 
 def create_sp_trees():
-    global three_valencies, type_bond_gl, dict_of_aroma_bonds, spTree
+    global three_valencies, type_bond_gl, dict_of_aroma_bonds #, spTree
     '''print("three_valencies:", three_valencies, "type_bond_gl:",\
            type_bond_gl, "dict_of_aroma_bonds:", \
           dict_of_aroma_bonds, "spTree:", spTree, sep='\n')'''
-    num_of_spanning_trees = 0
+    #num_of_spanning_trees = 0
     for atom in dict_of_aroma_bonds:
         if atom not in three_valencies:
             type_bond_gl = 0
-            spTree.append([])
+            #spTree.append([])
             #print("spTree:\n", spTree)
-            last_atom = dfs_aroma(atom, num_of_spanning_trees)
+            last_atom = dfs_aroma(atom) #, num_of_spanning_trees)
             type_bond_l = 2 - type_bond_gl % 2
             '''if type_bond_l == 2:
                 print("Not aromatic")
@@ -38,13 +38,13 @@ def create_sp_trees():
             print("dict_of_aroma_bonds: \n", dict_of_aroma_bonds)
             print("spTree:", spTree, "num_of_spanning_trees:", \
                   num_of_spanning_trees, sep='\n')'''
-            num_of_spanning_trees += 1
-def dfs_aroma(atom, num_of_spanning_trees):
+            #num_of_spanning_trees += 1
+def dfs_aroma(atom): #, num_of_spanning_trees):
     global three_valencies, type_bond_gl, dict_of_aroma_bonds
     three_valencies.add(atom)
     '''print("call dfs_aroma()")
     print("atom:", atom, "three_valencies:", three_valencies, sep='\n')'''
-    spTree[num_of_spanning_trees].append(atom)
+    #spTree[num_of_spanning_trees].append(atom)
     #print(spTree)
     for near_atom in dict_of_aroma_bonds[atom]:
         '''print("dict_of_aroma_bonds[atom]:", dict_of_aroma_bonds[atom],\
@@ -59,7 +59,7 @@ def dfs_aroma(atom, num_of_spanning_trees):
             #why twice add, when list?
             #print("dict_of_aroma_bonds: \n", dict_of_aroma_bonds)
             type_bond_gl += 1
-            last_atom = dfs_aroma(near_atom, num_of_spanning_trees)
+            last_atom = dfs_aroma(near_atom) #, num_of_spanning_trees)
     return last_atom 
     '''if len(three_valencies) == len(dict_of_aroma_bonds):
         for near_atom in dict_of_aroma_bonds[atom]:
